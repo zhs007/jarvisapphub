@@ -1,0 +1,44 @@
+# jarvis app
+
+author: zhs007
+authoremail: zerrozhao@gmail.com
+
+name: initdocker
+description: I can help you install docker.
+keywords:
+  - docker
+
+version: 18.09.6
+
+type: normal
+
+docker: false
+
+# There are some variables that can be used in this app.
+#   - AppPath: In which directory this app will run
+#   - JarvisAppRootPath: The root directory of the Jarvis app
+#   - JarvisNodeType: Jarvis node type
+#   - JarvisNodeVersion: Jarvis node version
+#   - JarvisCoreVersion: Jarvis core version
+#   - AppVersion: app version
+#   - DockerName: docker name
+#   - Config: 
+
+# script - 
+script: |
+  yum remove docker \
+    docker-client \
+    docker-client-latest \
+    docker-common \
+    docker-latest \
+    docker-latest-logrotate \
+    docker-logrotate \
+    docker-engine
+  yum install -y yum-utils \
+    device-mapper-persistent-data \
+    lvm2
+  yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+  yum install docker-ce docker-ce-cli containerd.io
+  systemctl start docker
